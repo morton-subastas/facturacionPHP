@@ -1,0 +1,3 @@
+ERRORES SAT
+	-SOAP			(con la CLASE_1)
+	-OPENSSL	(con la CLASE_1)

@@ -1,0 +1,458 @@
+/* Indice Estilos
+1. Colores Principales
+2. Botones Principales
+3. Divs , Inputs , Forms y select
+4. Menu hamburguesa
+5. Iconos
+6. Tables
+7. breadcrumb
+8. Modal Footer
+9. Progress Bar
+10. Nav Bar
+11. Titulos
+
+ */
+
+.concolor{
+  background-color: red !important;
+}
+
+.noofrece{
+  background-color: #F9E79F !important;
+}
+
+ .caja {
+    margin:20px auto 40px auto;
+    border:1px solid #d9d9d9;
+    height:30px;
+    overflow: hidden;
+    width: 230px;
+    position:relative;
+ }
+ select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 250px;
+ }
+ select:focus{ outline: none;}
+
+ .caja::after{
+ 	content:"\025be";
+ 	display:table-cell;
+ 	padding-top:7px;
+ 	text-align:center;
+ 	width:30px;
+ 	height:30px;
+ 	background-color:#d9d9d9;
+ 	position:absolute;
+ 	top:0;
+ 	right:0px;
+ 	pointer-events: none;
+ }
+
+
+  .prim-form{
+    font-size: 1em !important;
+  }
+
+  .select-sub{
+    font-size: 1em !important;
+  }
+
+/* 1. Colores Principales */
+:root{
+  --verde-principal: #004D43;
+  --verde-secundario: #177850;
+  --gris-principal: #333;
+  --rojo-principal: #F4180A;
+  --gris-aside: #27292C;
+}
+/* --------------------------------- */
+
+/* 2. Botones Principales */
+.btn-1{
+  /* background: #fff; */
+  color: var(--verde-principal);
+  border: 1px solid var(--verde-principal);
+background: linear-gradient(to right, var(--verde-principal) 50%, white 50%);
+ background-size: 200% 100%;
+ background-position: right bottom;
+ transition: all .5s ease-out;
+}
+
+.btn-1:hover{
+  background-position: left bottom;
+  color: #fff;
+  border: 1px solid var(--verde-principal);
+}
+
+
+.btn-1:active{
+  color: #fff !important;
+  border: 1px solid var(--verde-principal) !important;
+  background: var(--verde-principal) !important;
+}
+
+.btn-2{
+color:#004D43 !important;
+ border: 2px solid var(--verde-principal) !important;
+ border-radius: 7px !important;
+ background: linear-gradient(#fff, #fff 50%, var(--verde-principal) 50%, var(--verde-principal)) !important;
+ background-size: 100% 200% !important;
+ transition: all 1s !important;
+}
+
+.btn-2:hover{
+  background-position: 100% 100% !important;
+ color: #fff !important;
+}
+
+
+.ov-btn-slide-close {
+background: #fff; /* color de fondo */
+color: #004D43; /* color de fuente */
+border: 2px solid #004D43; /* tamaño y color de borde */
+margin-top: 5px;
+margin-right: 10px;
+position: relative;
+z-index: 1;
+overflow: hidden;
+display: inline-block;
+border-radius: 0 !important;
+}
+.ov-btn-slide-close:before, .ov-btn-slide-close:after {
+content: "";
+z-index: -1;
+position: absolute;
+width: 50%;
+height: 100%;
+top: 0;
+left: -50%;
+background-color: #004D43; /* color de fondo hover */
+-webkit-transition: all 0.4s ease-in-out;
+-o-transition: all 0.4s ease-in-out;
+transition: all 0.4s ease-in-out;
+}
+.ov-btn-slide-close:after {
+left: 100%;
+}
+.ov-btn-slide-close:hover {
+color: #fff !important; /* color de fuente hover */
+background: transparent !important;
+text-decoration: none;
+font-weight: normal !important;
+}
+.ov-btn-slide-close:hover:before {
+left: 0;
+}
+.ov-btn-slide-close:hover:after {
+left: 50%;
+}
+
+.agregar{
+  /* background: #fff; */
+  color: var(--verde-secundario) !important;
+  border: 1px solid var(--verde-secundario) !important;
+background: linear-gradient(to right, var(--verde-secundario) 50%, white 50%) !important;
+ background-size: 200% 100% !important;
+ background-position: right bottom !important;
+ transition: all .5s ease-out !important;
+ outline: none !important;
+}
+
+.agregar:hover{
+  background-position: left bottom !important;
+  color: #fff !important;
+  border: 1px solid var(--verde-secundario) !important;
+}
+
+
+.eliminar{
+  /* background: #fff; */
+  color: var(--rojo-principal) !important;
+  border: 1px solid var(--rojo-principal) !important;
+background: linear-gradient(to left, var(--rojo-principal) 50%, white 50%) !important;
+ background-size: 200% 100% !important;
+ background-position: left bottom !important;
+ transition: all .5s ease-out !important;
+}
+
+.eliminar:hover{
+  background-position: right bottom !important;
+  color: #fff !important;
+  border: 1px solid var(--rojo-principal) !important;
+}
+/* ------------------------------------------- */
+
+/* 3. Divs , Inputs , Forms and Select */
+
+/* .form-control::placeholder{
+  color: var(--gris-principal)!important;
+} */
+
+div .datos{
+  text-align: center !important;
+}
+
+
+.form-group .prim-form input{
+  font-size: 1em;
+  border: none;
+   border-radius: 5px 5px 5px 5px;
+   height: 40px;
+   border-bottom: 2px solid var(--verde-principal);
+   outline: none;
+   background: #CBDEDC;
+   font-weight: bold;
+   /* color: #fff; */
+   text-align: center;
+
+}
+
+.form-group .prim-form p{
+  font-weight: bold;
+}
+
+
+.form-group input{
+  border: none !important;
+   border-radius: 5px 5px 5px 5px !important;
+   height: 40px !important;
+   border-bottom: 2px solid var(--verde-principal) !important;
+   border-top: 2px solid var(--verde-principal) !important;
+   outline: none !important;
+   background: rgba(0, 77, 67, 0.3) !important;
+   font-weight: bold !important;
+   /* color: #fff; */
+   text-align: center !important;
+
+}
+
+/* Select Buscador */
+.select2-container {
+  border: 1px solid #CCCCCC !important;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.select2-container:focus {
+border-color: #66afe9 !important;
+outline: 0;
+-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+
+
+}
+
+.select2-container--default .select2-selection--single{
+  height: 34px !important;
+  border: none;
+}
+
+.select2-container--default .select2-selection--single:focus{
+  border-color: #66afe9 !important;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  height: 34px !important;
+  padding-top: 2px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered:focus {
+  border-color: #66afe9 !important;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+}
+
+.select2-results__option:hover{
+  background: #1E90FF !important;
+  color: #fff;
+}
+
+.inp-bloq{
+  /* border: 1px solid var(--gris-principal); */
+  border: none;
+  background: transparent !important;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.inp-bloq:hover{
+  background: #555555!important;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+/* ---------------------------------------------- */
+
+
+
+/* 4. Menu hamburguesa */
+
+/* .hambur{
+  border-radius: 50% !important;
+  background: blue !important;
+  width: 50%;
+} */
+
+.menu-home{
+  margin-left: 25px;
+  padding-left: 5px;
+  border-left: 4px solid var(--verde-principal);
+}
+
+
+.hamburger-home{
+  background: #495057!important;
+  height: 33.5px !important;
+  border: 2px solid #495057 !important;
+}
+
+.hamburger.is-closed .hamb-top, .hamburger.is-closed .hamb-middle,
+.hamburger.is-closed .hamb-bottom {
+    background-color: #fff !important;
+}
+/* ------------------- */
+
+
+/* 5. Iconos */
+
+.icon-style{
+  font-size: 22px;
+  color: #004D43;
+}
+
+
+/* ------------------------------------------- */
+
+
+/* 6. Tables */
+
+.tabla-fac thead {
+  background: var(--verde-principal) !important;
+  color: #fff;
+}
+
+.tabla-fac th {
+  text-align: center !important;
+}
+
+.tabla-fac2 th{
+  background: #D6D8DB !important;
+  color: var(--gris-principal);
+}
+
+
+/* ---------------------------------------------- */
+
+/* 7. breadcrumb */
+
+.breadcrumb {
+	background: rgba(0, 77, 67, .8) !important;
+
+}
+
+.breadcrumb a{
+  color: #fff;
+}
+
+.breadcrumb a:hover , a:active , a:focus{
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.breadcrumb>.active{
+  color: rgba(167, 169, 172) !important;
+}
+
+.breadcrumb>li+li:before {
+color: #fff !important;
+}
+
+
+/* --------------------------------------------------- */
+
+/* 8. Modal Footer */
+
+
+
+
+/* ----------------------------------------------------- */
+
+/* 9. Progress Bar  */
+.progress-bar{
+  background-color: var(--verde-principal) !important;
+}
+
+
+
+/* ------------------------------------------------------- */
+
+/*10. Nav Bar */
+#sidebar-wrapper{
+background: var(--gris-aside) !important;
+
+}
+.sidebar-nav{
+  top: 15px !important;
+}
+
+.nav-aside li a{
+  background: transparent !important;
+  /* border: 1px solid #fff; */
+  color: #fff !important;
+  border-radius: 6px !important;
+  margin: 3px 3px !important;
+}
+
+.nav-aside li {
+  text-align: center !important;
+}
+
+.nav-aside li a:focus{
+  background: #313437 !important;
+  color: #11D37C !important;
+  font-weight: bold;
+}
+
+.nav-aside li a:hover{
+  background: #313437 !important;
+  color: #11D37C !important;
+  font-weight: bold;
+}
+
+.navbar img{
+    width: 80% !important;
+    position: absolute !important;
+    /* top: 500px; */
+    left: 20px !important;
+    background: #EBE6E6 !important;
+    margin-top: 10px !important;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+
+/* ------------------------------------------------------------- */
+
+/* 11. Titulos */
+
+.title-head{
+  position: absolute;
+  margin-left: 29%;
+
+}
+
+
+
+/* -------------------------------------------------------------- */

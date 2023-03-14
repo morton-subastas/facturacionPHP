@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" LugarExpedicion="11000" MetodoPago="PUE" TipoDeComprobante="I" SubTotal="0.40" Total="0.46" Moneda="MXN" Certificado="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" NoCertificado="00001000000506549092" FormaPago="01" Fecha="2022-08-11T01:24:31" Serie="A" Folio="11" Version="3.3">
+	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="Morton Subastas SA  de CV" RegimenFiscal="601"/>
+	<cfdi:Receptor Rfc="VEMJ940531FF1" Nombre="Juan Carlos Vega Mendoza" UsoCFDI="G01"/>
+	<cfdi:Conceptos>
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="4" Cantidad="1.0000" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="&lt;center&gt;&lt;b&gt;Comisión &lt;/b&gt;&lt;/center&gt;&lt;br&gt; b1" ValorUnitario="0.4000" Importe="0.40">
+			<cfdi:Impuestos>
+				<cfdi:Traslados>
+					<cfdi:Traslado Base="0.40" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.06"/>
+				</cfdi:Traslados>
+			</cfdi:Impuestos>
+		</cfdi:Concepto>
+	</cfdi:Conceptos>
+	<cfdi:Impuestos TotalImpuestosTrasladados="0.06">
+		<cfdi:Traslados>
+			<cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.06"/>
+		</cfdi:Traslados>
+	</cfdi:Impuestos>
+</cfdi:Comprobante>

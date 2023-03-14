@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" LugarExpedicion="11000" MetodoPago="PUE" TipoDeComprobante="I" SubTotal="0.40" Total="0.46" Moneda="MXN" NoCertificado="00001000000506549092" FormaPago="01" Fecha="2022-08-11T01:04:39" Serie="A" Folio="7" Version="3.3">
+	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="Morton Subastas SA  de CV" RegimenFiscal="601"/>
+	<cfdi:Receptor Rfc="VEMJ940531FF1" Nombre="Juan Carlos Vega Mendoza" UsoCFDI="G01"/>
+	<cfdi:Conceptos>
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="4" Cantidad="1.0000" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="&lt;center&gt;&lt;b&gt;Comisión &lt;/b&gt;&lt;/center&gt;&lt;br&gt; a" ValorUnitario="0.4000" Importe="0.40">
+			<cfdi:Impuestos>
+				<cfdi:Traslados>
+					<cfdi:Traslado Base="0.40" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.06"/>
+				</cfdi:Traslados>
+			</cfdi:Impuestos>
+		</cfdi:Concepto>
+	</cfdi:Conceptos>
+	<cfdi:Impuestos TotalImpuestosTrasladados="0.06">
+		<cfdi:Traslados>
+			<cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.06"/>
+		</cfdi:Traslados>
+	</cfdi:Impuestos>
+</cfdi:Comprobante>

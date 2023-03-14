@@ -1,0 +1,45 @@
+--cfdi
+    DELETE FROM `cfdi` WHERE `cfdiid` in (2,3);
+
+    DELETE FROM `cfdi_detalle` WHERE `cfdiid` in (2,3,4,5);
+
+    DELETE FROM `cfdi_productos` WHERE `cfdiproid` in (1,2,3, 4,5);
+
+
+        DELETE FROM `cfdi` WHERE `cfdiid`;
+
+        DELETE FROM `cfdi_detalle`;
+
+        DELETE FROM `cfdi_productos`;
+--
+c810urMu8Q
+-----------------------------------------------------------------
+--------------COMISIONES
+-----------------------------------------------------------------
+1 - 199
+    presencial 20%
+200 a 399
+    ofertas ausencia 20%
+
+400 a 699 MS
+    20%
+    1%
+700 a 999 AL
+    20%
+    3%
+1000 VDS
+    20%
+
+1-OK
+2-OK
+3-OK
+4-OK
+5-OK
+6-OK
+7-OK
+8-OK
+9-OK
+10-OK
+11-OK
+12-OK
+13-OK
