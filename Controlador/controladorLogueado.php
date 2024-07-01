@@ -22,7 +22,7 @@ class ControladorLogueado{
           //header('Location: vista/facturacion');
           header('Location: vista/comienza');
         }
-        if (($rol == 'EMAIL') || ($rol == 'DEVOLVER')){
+        if (($rol == 'EMAIL') || ($rol == 'DEVOLVER') || ($rol == 'EMAIL_PLD') || ($rol == 'EMAIL_OFER')){
           //header('Location: vista/ItemsMissing');
           header('Location: vista/comienza');
         }

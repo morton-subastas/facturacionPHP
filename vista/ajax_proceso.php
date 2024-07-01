@@ -12,7 +12,7 @@ $EMA_R = trim($_POST['correo']);
 $OFR_R = trim($_POST['ofrece']);
 
 
-$conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
+$conn = new mysqli("localhost", "root", "", "timbrado");
 
 
   if ($conn->connect_error) {
@@ -20,7 +20,7 @@ $conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
     $resultado = "ERROR";
   }else{
     $sql = "SELECT * FROM `emailenviados` WHERE `contrato`='".$CON_R."' and `partida`='".$PAR_R."' and `paleta`='".$PAL_R."' and `correo`='".$EMA_R."'";
-    //$resultado = "ANTES"; // .$sql;
+    
     $result = $conn->query($sql);
 
     $trae = $result->num_rows;
@@ -41,18 +41,15 @@ $conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
     }else{
       //$resultado = "UPDATE";
       $query = "UPDATE `emailenviados` SET `ofrece` =  '".$OFR_R."',`correo` = '".$EMA_R."',`status` = 'MODIFICADO' WHERE `contrato` = '".$CON_R."' AND `partida` = '".$PAR_R."' AND `paleta` ='".$PAL_R."';";
-      //$resultado = $query;
       $result = $conn->query($query);
-
       $resultado = "MODIFICADO"; //.$query;
     }
 
-    //echo "Numero de resultado: $result->num_rows";
-    //$resultado = "OK".$result->num_rows;
-    $result->close();
+   
+    $conn->close();
   }
 
   echo $resultado;
-//$resultado  = "LLEGA";
+
 
 ?>

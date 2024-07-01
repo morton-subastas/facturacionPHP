@@ -20,9 +20,12 @@ class ModeloUsers{
       try{
           //echo "<br>MODELO: llega modelos";
           $pass_hash = Password::hash($pas);
+          echo  $pass_hash;
 
           //echo "uno".$pass_hash."<br>";
           $pasr_vista = Password::verify($pas, $pass_hash);
+     
+          
           //echo "dos".$pasr_vista."<br>";
 
           $sql = "SELECT * FROM `morton_usuario` WHERE `usu_email` = '$usu' AND `usu_pass` = '$pass_hash' ";

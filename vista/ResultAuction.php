@@ -18,12 +18,10 @@ if (($fac != '')) {
       break;
       //case 'eibarra@mortonsubastas.com':
     case 'cpascual@mortonsubastas.com':
-      //$filtro = "Libros";
-      $filtro = "Todas";
+      $filtro = "Libros";
       break;
     case 'ebonilla@mortonsubastas.com':
       $filtro = "ArteObra";
-      //echo "edgar.1";
       break;
     case 'mjimenez@mortonsubastas.com':
     case 'mramirez@mortonsubastas.com':
@@ -32,10 +30,12 @@ if (($fac != '')) {
     case 'msanchez@mortonsubastas.com':
     case 'rcerecedo@mortonsubastas.com':
     case 'mbartolo@mortonsubastas.com':
+    case 'ehernandez@mortonsubastas.com':
       $filtro = "Todas";
       break;
   }
   include 'funciones_RFC.php';
+
   //list($numsub, $saledate, $saledept, $locate) = getAuctions();
   $variable = getAuctions($filtro);
 
@@ -111,7 +111,7 @@ if (($fac != '')) {
                 <?php if ($accion == "not") { ?>
                   <br>
                   <h4>NOTIFICACIONES PREVIAS SUBASTA</h4>
-                  <?php echo $cuantos_pre; ?>
+                 
                   <select name="pre_subasta" class="form-select select-sub">
                     <?php
                     while ($suma_pre <= $cuantos_pre) {

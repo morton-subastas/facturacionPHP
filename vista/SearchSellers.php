@@ -5,6 +5,7 @@ session_start();
 $fac = $_SESSION['email'];
 
 if (($fac != '')) {
+  //$conn = new mysqli("localhost", "root", "", "timbrado");
   $conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
 
   include "head.php";
@@ -14,7 +15,11 @@ if (($fac != '')) {
   //echo "SearchSellers<br>";
   //echo "SUBASTA:".$_POST["subasta"]."<br>";
   //echo "ROL".$_POST["rol"]."<br>";
-  $subasta = $_POST["subasta"];
+  $postSubasta = $_POST["subasta"];
+  $splitPost = explode(" ,", $postSubasta);
+  $subasta = $splitPost[0];
+  $salename = $splitPost[1];
+
   if ($subasta == '') {
     $subasta = $_GET["subasta"];
   }
@@ -25,6 +30,7 @@ if (($fac != '')) {
 
   //echo "subasta*-".$subasta."-";
   $variable = getEmail($subasta);
+
   //echo "--------------"; var_dump($variable); echo "--------------";
   //echo "0)En proceso de construccion<br>";
   //echo "muestra".
@@ -40,8 +46,6 @@ if (($fac != '')) {
   echo "<div class='container'>";
   echo "<div class='row'>";
   echo "<div class='col-md-12'>";
-  //$de = 0;
-
   echo "<table class='table table-bordered' width='92%' border='2'>";
   echo "<tr><th colspan='6' style='background-color:#004D43; color: #fff;'><center><b><h1>LOTES NO VENDIDOS DE LA SUBASTAS " . $subasta . " </h1></b></center></th></tr>";
   echo "<tr style='color:#fff; font-weight:normal; text-align:center; background: #004D43'>";
@@ -65,12 +69,9 @@ if (($fac != '')) {
       die("ERROR: No se puede conectar al servidor: " . $conn->connect_error);
       $resultado = "ERROR";
     } else {
-      //echo "sum-".$suma."-cuantos".$cuantos."<br>";
       $comienza = 0; //0
       $tempo_suma = 0;
-      //$suma = 20; $cuantos = 40;    //QUITAR
       $contador = $suma2 + 1;
-      //var_dump($variable);
 
       $con_B = trim($variable[$suma2]["receipt"]);
       $par_B = trim($variable[$suma2]["item"]);
@@ -80,74 +81,53 @@ if (($fac != '')) {
 
       $Host = "localhost";
       $User = "root";
-      $Password = "h0rKm8dEwHZz";
+      //$Password = "h0rKm8dEwHZz";
+      $Password = "";
+
       $DataBase = "timbrado";
       $conexion = mysqli_connect($Host, $User, $Password, $DataBase) or die("No se pudo realizar la conexion con el servidor.");
 
       $sql = "SELECT * FROM `emailenviados` WHERE `contrato`='" . $con_B . "' and `partida`='" . $par_B . "' and `paleta`='" . $pal_B . "' and `correo`='" . $cor_B . "' and `status`='ENVIADO'";
-      //echo "SQL-<br>".$sql."<br>";
-      //$result = $conn->query($sql);
-      //echo "RES".$result."<br>";
-      //$trae = $result->num_rows;
-      //echo "antes".$trae;
-      //$de = $de + $trae;
 
       $resultado = mysqli_query($conexion, $sql);
+
       $trae = mysqli_num_rows($resultado);
-      //echo "numero".$numero_filas;
       $de = $de + $trae;
-      //echo "s)".$suma."-c)".$cuantos."<br>";
       if ($trae == 0) {
-        //*echo "c-------------------------INICIO-----------------------<br>";
         $temporal = 0;
         $evalua = 0;
-        //*echo $suma2.")".$variable[$suma2]['email']."-->".$array_vacio."<br>";
+        
         if (($array_vacio == 0) && ($variable[$suma2]['email'] <> $arreglo_cuantos[$disponible][0])) {
           $disponible = $disponible + 1;
-
-
           $arreglo_cuantos[$disponible][0] = $variable[$suma2]['email'];
           $arreglo_cuantos[$disponible][1] = $suma2;
           $arreglo_cuantos[$disponible][2] = $suma2;
-          //echo "disponible <b><h3>".$disponible."</h3></b><br>";
-          //*echo "*I.E:-".$arreglo_cuantos[$disponible][0]."-*<br>";
-          //*echo "*I.C:-".$arreglo_cuantos[$disponible][1]."-*<br>";
-          //echo "*I.FT-".$arreglo_cuantos[$disponible][2]."-*<br>";
+         
+      
           $array_vacio = 1;
           $temporal = 1;
           $evalua = 1;
         } else {
-          //*echo "compara ".$variable[$suma2]['email']."vs".$arreglo_cuantos[$disponible][0]."<br>";
           if ($variable[$suma2]['email'] == $arreglo_cuantos[$disponible][0]) {
-
-            //echo "*Trae-".$trae."-<br>";
-
             if ($trae == 0) {
               $evalua = 1;
               $arreglo_cuantos[$disponible][2] = $suma2;
-              //*echo "*E-".$arreglo_cuantos[$disponible][0]."-*<br>";
-              //*echo "*C-".$arreglo_cuantos[$disponible][1]."-*<br>";
-              //]echo "*FT-".$arreglo_cuantos[$disponible][2]."-*<br>";
               $temporal = 1;
             } else {
               echo "ya en bd<br>";
             }
           } else {
-
-            //*echo "<h4>Tem-".$temporal."</h4><br>";
             $array_vacio = 0;
             $disponible = $disponible + 1;
-
             $arreglo_cuantos[$disponible][0] = $variable[$suma2]['email'];
             $arreglo_cuantos[$disponible][1] = $suma2;
             $arreglo_cuantos[$disponible][2] = $suma2;
-            //*echo $disponible."*TemporalE-".$arreglo_cuantos[$disponible][0]."-*<br>";
-
           }
         }
 
+
+
         //*echo "---------------------------------------------------------------------------FIN---------------------------------------------------------------------------<br>";
-        //$array_vacio=0;
       } else {
         if ($fac == 'mramirez@mortonsubastas.com') {
           echo "<form  class='col-lg-12' id='ItemNotSells' name='ItemNotSells' action='Reenvio.php' method='post' >";
@@ -159,42 +139,36 @@ if (($fac != '')) {
           echo "<input type=hidden name='correo_r' value='" . $cor_B . "'>";
           echo "</form>";
         }
-        /*
-                    if ($fac == 'mjimenez@mortonsubastas.com'){
-                      //echo "-a-";
-                      while($fila=mysqli_fetch_array($resultado)){
-                          //echo $fila."<br>";
-                          //var_dump($fila);
-                          if ($fila['capturo40'] == 'mjimenez@mortonsubastas.com'){
-                            $es_accion = 'RECONTRATACIÓN';
-                          }
-                          if ($fila['capturo40'] == 'mramirez@mortonsubastas.com'){
-                            $es_accion = 'DEVOLUCCIÓN';
-                          }
-                      }
-                      echo "<tr><td COLSPAN=2><H3>".$es_accion."</H3></td><td COLSPAN=4>Contrato:".$con_B." Partida:".$par_B." Paleta".$pal_B."</td></tr>";
-                    }
-                    */
+                    
       }
     }
     //echo "que hace<br>";
     //*echo "<b>RES</b>:".$disponible."-".$arreglo_cuantos[$disponible][0]."(i)".$arreglo_cuantos[$disponible][1]."(f)".$arreglo_cuantos[$disponible][2]."<br><br><br>";
 
     $suma2 = $suma2 + 1;
+    $contador = $contador + 1;
+
   }
+
+ // print_r($arreglo_cuantos);
   //echo "{".count($arreglo_cuantos)."}<br>";
   $busca_entre = count($arreglo_cuantos);
+
   //*echo "<br>+++++++++++++++++++++++++++".$busca_entre."++++++++++++++++++++++++++++++++++++<br>";
   $star = 0;
   while ($star <= $busca_entre) {
     //*echo "(".$star.")".$arreglo_cuantos[$star][0]."-inicio)".$arreglo_cuantos[$star][1]."-fin)".$arreglo_cuantos[$star][2]."<br>";
     $star = $star + 1;
   }
+  
   //*echo "<br>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>";
   $arranca = 1;
 
+  //print_r($variable);
+  //print_r($arreglo_cuantos);
   while ($suma < $cuantos) {
     $mas = $suma + 1;
+    $contador2 = 0;
     if ($conn->connect_error) {
       die("ERROR: No se puede conectar al servidor: " . $conn->connect_error);
       $resultado = "ERROR";
@@ -211,20 +185,9 @@ if (($fac != '')) {
       $result2 = $conn->query($sql2);
       //echo "RES".$result."<br>";
       $trae2 = $result2->num_rows;
-      //echo $trae2."<br>";
       if ($trae2 == 0) {
         $inactivar = 0;
-        if ($formulario == 1) {
-          if ($rol_recibe == 'EMAIL') {
-            echo "<form  class='col-lg-12' id='ItemNotSells' name='ItemNotSells' action='EmailSending.php' method='post' >";
-            echo "<form id='ItemNotSells' name='ItemNotSells' method='post'>";
-            //echo "(A)<br>";
-          }
-          if ($rol_recibe == 'DEVOLVER') {
-            echo "<form  class='col-lg-12' id='ItemNotSells' name='BackItemUser' action='BackItemUser.php' method='post' >";
-            //echo "(*B*)<br>";
-          }
-        }
+       
         echo "<input type='hidden' name='suma' id=suma='suma' value='" . $suma . "'>";
         echo "<tr>";
         echo "<td>";
@@ -257,10 +220,16 @@ if (($fac != '')) {
           //echo "Fin:<input type='text' id='fin' name='fin' value='".$suma."'>";
         }
         if (($rol_recibe == 'EMAIL') || ($rol_recibe == 'SUPERADMIN')) {
-          echo "SE OFRECE-:<input type='text' class='noofrece' size='10' id='ofrece" . $suma . "' name='ofrece" . $suma . "' onblur='quecapturo(" . $suma . ")' onKeypress='if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;' onchange={MASK(this,this.value,'-$##,###,##0.00',1)} ><br>";
+          echo "NUEVA RESERVA-:<input type='text' class='noofrece' size='10' id='ofrece" . $suma . "' name='ofrece" . $suma . "' onkeyup='quecapturo(" . $suma . ")' onKeypress='if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;' onKeypress={MASK(this,this.value,'-$##,###,##0.00',1)} ><br><br>";
+        }
+        if($fac == 'jjuarez@mortonsubastas.com'){
+          echo "NUEVOS ESTIMADOS-:<input type = 'text' class='form-control noofrece' id='estimado" . $suma . "'  name='estimado" .$suma . "' onkeyup='agregaestimado(" . $suma . ")'><br>"; 
+          echo "<div id='resultado9' name='resultado9'></div><br><br>";
+          echo "Fecha Recolección-:<input type='text' class='form-control noofrece' id='fechaRe" . $suma . "'  name='fechaRe" .$suma . "' onkeyup='agrega_fecha(" . $suma . ")'>"; 
+
         }
         echo "<div id='resultado' name='resultado'></div><br>";
-        echo "<h4>$" . number_format($variable[$suma]["low"]) . "-$" . number_format($variable[$suma]["high"]) . "</h4><br>";
+        echo "Estimado Anterior<h4>$" . number_format($variable[$suma]["low"]) . "-$" . number_format($variable[$suma]["high"]) . "</h4><br>";
         //echo "suma".$suma."<br>";
         echo "</td>";
         echo "<td>";
@@ -283,7 +252,7 @@ if (($fac != '')) {
           echo "<input class='form-control form-control-lg' style='width:200px' type='text' value='" . $variable[$suma]["email"] . "' id='correo" . $suma . "' name='correo" . $suma . "' size='30'><br><br>";
         }
         if (($rol_recibe == 'EMAIL') || ($rol_recibe == 'SUPERADMIN')) {
-          echo "Comentarios:<br><textarea id='observaciones" . $suma . "' name='observaciones" . $suma . "' rows='4' cols='23'  class='noofrece' onblur='agrega_texto($suma)'></textarea>";
+          echo "Comentarios:<br><textarea id='observaciones" . $suma . "' name='observaciones" . $suma . "' rows='4' cols='23'  class='noofrece' onkeyup='agrega_texto($suma)'></textarea>";
         }
         echo "<div id='resultado2' name='resultado2'></div>";
         if ($rol_recibe == 'DEVOLVER') {
@@ -318,10 +287,12 @@ if (($fac != '')) {
         echo "<img src='https://mimorton.com/imglink/$cambio' width='100%' heigth='100%'> ";
         echo "<br>";
         $actual = $variable[$suma]["receipt"];
-        $after = $variable[$contador]["receipt"];
+        $after = $variable[$suma]["receipt"];
 
         //echo "*".$suma."Actual-".$actual."-  ".$contador."Despues_".$after."_";
+ 
         if ((trim($actual) !== trim($after))) {
+          var_dump(trim($actual) !== trim($after));
           $cambia_contrato = 1;
         }
         echo "</td>";
@@ -334,29 +305,51 @@ if (($fac != '')) {
           $temporal = 1;
           //echo "ENTRA TEMPORAL<br>";
         }
-        //echo "arranca_:".$arranca."-vs-".$suma."<br>";
-        //echo "c<b>".$variable[$suma]['email']."</b>--e".$arreglo_cuantos[$arranca][0]."<br>";
-        //echo "c<b>".$suma."</b>-e(".$arranca.")".$arreglo_cuantos[$arranca][2]."<br>";
+        
         if (($variable[$suma]['email'] == $arreglo_cuantos[$arranca][0])  && ($suma == $arreglo_cuantos[$arranca][2])) {
           $cambia_contrato = 0;
           if ($suma_temporal == '') {
             $suma_temporal = 0;
           }
-          echo "<center>";
-          echo "<input type='hidden' id='subasta' name='subasta' value='" . $subasta . "'>";
-          echo "<input type='hidden' id='empieza' name='empieza' value='" . $suma_temporal . "'>";
-          echo "<input type='hidden' id='finaliza' name='finaliza' value='" . $suma . "'>";
-          echo "<button type='submit' id='btn_save' name='btn_save' class='btn-lg btn-2' value='1'>Enviar Correo 0</button>";
-          echo "</center>";
+          $paleta = number_format($variable[$suma]["item"]);
+          echo "<input type='hidden' id='paletaLot' name='paletaLot' value='" . $paleta . "'>";
+          $lote = substr($variable[$suma]["salelot"], 5, 12);
+        
+            if ($rol_recibe == 'EMAIL') {
+              echo "<form  class='col-lg-12' id='ItemNotSells' name='ItemNotSells' action='EmailSending' method='post' >";
+              echo "<input type='hidden' id='subasta' name='subasta' value='" . $subasta . "'>";
+              echo "<input type='hidden' id='empieza' name='empieza' value='" . $suma_temporal . "'>";
+              echo "<input type='hidden' id='finaliza' name='finaliza' value='" . $suma . "'>";
+              echo "<input type='hidden' id='email' name='email' value='".$variable[$suma]["email"]."'>";
+              echo '<button type="submit" class="btn-lg btn-2" value="1" >Enviar Correo </button>';
+              echo "</form>";
+            }
+            if ($rol_recibe == 'DEVOLVER') {
+              echo "<form  id='ItemNotSells' name='BackItemUser' action='BackItemUser' method='POST' >";
+              echo "<input type='hidden' name='suma' id=suma='suma' value='" . $suma . "'>";
+              echo "<input type='hidden'  id='contrato" . $suma . "' name='contrato" . $suma . "' value=" . $variable[$suma]["receipt"] . ">";
+              echo "<input type='hidden' id='subasta' name='subasta' value='" . $subasta . "'>";
+              echo "<input type='hidden' id='empieza' name='empieza' value='" . $suma_temporal . "'>";
+              echo "<input type='hidden' id='finaliza' name='finaliza' value='" . $suma . "'>";
+              echo "<input type='hidden' id='email' name='email' value='".$variable[$suma]["email"]."'>";
+              echo "<input type='hidden' id='paleta' name='paleta' value='".$paleta."'>";
+              echo "<input type='hidden' id='salename' name='salename' value='".$salename."'>";
+              echo '<button type="submit" class="btn-lg btn-2" value="1">Enviar Correo </button>';
+              echo "</form>";
+            }
+          
+         
           $suma_temporal = '';
           $temporal = 2;
           $formulario = 1;
-          echo "</form>";
           //echo "{}";
           $arranca = $arranca + 1;
         }
         echo "</td>";
         echo "</tr>";
+
+      
+
         //echo "suma".$suma."cuantos".$cuantos."<br>";
         //echo "T:".$temporal."<br>";
         $resta = $cuantos - $suma;
@@ -391,7 +384,7 @@ if (($fac != '')) {
     }
     //echo "s{".$suma."}<br>";
     $suma = $suma + 1;
-    $contador = $suma + 1;
+    $contador2 = $contador2 + 1;
   }
 
   echo "<tr><td colspan=4></td><td colspan=2>Enviados <b>" . $de . " </b> de <b>" . $cuantos . "</b></td></tr>";
@@ -458,18 +451,21 @@ if (($fac != '')) {
   }
 
   function cambia_direccionA175(suma) {
+
+
+    console.log(suma);
     var s = document.getElementById("subasta").value;
-    //alert ("S" + s);
+    console.log(s);
     var c = document.getElementById("contrato" + suma).value;
-    //alert("C" + c);
+    console.log(c);
     var p = document.getElementById("paleta" + suma).value;
-    //alert("P" + p);
+    console.log(p);
     var r = document.getElementById("radio" + suma).value;
-    //alert("R" + r);
+    console.log(r);
     var a = document.getElementById("partida" + suma).value;
-    //alert("A" + a);
+    console.log(a);
     var e = document.getElementById("correo" + suma).value;
-    //alert("E" + e);
+    console.log(e);
 
     var parametros = {
       "subasta": s,
@@ -479,10 +475,12 @@ if (($fac != '')) {
       "radio": r,
       "correo": e
     };
-    $.ajax({
+   
+    console.log(parametros);
+   $.ajax({
       data: parametros, //datos que se envian a traves de ajax
-      url: 'ajax_proceso4A175.php', //archivo que recibe la peticion
-      type: 'post', //método de envio
+      url: 'ajax_proceso4A175', //archivo que recibe la peticion
+      type: 'POST', //método de envio
       beforeSend: function() {
         $("#resultado4").html("<p style='color:green';>Agregado, con éxito...</p>");
       },
@@ -599,11 +597,11 @@ if (($fac != '')) {
 
   }
 
+
   function agrega_texto(suma) {
     var c = document.getElementById("contrato" + suma).value;
     var p = document.getElementById("paleta" + suma).value;
     var o = document.getElementById("observaciones" + suma).value;
-    //alert(c); alert(p); alert(o);
     var parametros = {
       "contrato": c,
       "paleta": p,
@@ -611,7 +609,7 @@ if (($fac != '')) {
     };
     $.ajax({
       data: parametros, //datos que se envian a traves de ajax
-      url: 'ajax_proceso2.php', //archivo que recibe la peticion
+      url: 'ajax_proceso2', //archivo que recibe la peticion
       type: 'post', //método de envio
       beforeSend: function() {
         $("#resultado2").html("<p style='color:green';>Agregado, con éxito...</p>");
@@ -622,10 +620,52 @@ if (($fac != '')) {
     });
   }
 
-  function quecapturo(suma) {
-    //alert("##Comienza##");
+  function agregaestimado(suma) {
+    var c = document.getElementById("contrato" + suma).value;
+    var p = document.getElementById("paleta" + suma).value;
+    var o = document.getElementById("estimado" + suma).value;
+    var parametros = {
+      "contrato": c,
+      "paleta": p,
+      "estimados": o
+    };
+    $.ajax({
+      data: parametros, //datos que se envian a traves de ajax
+      url: 'ajax_estimados', //archivo que recibe la peticion
+      type: 'post', //método de envio
+      beforeSend: function() {
+        console.log("Exito");
+      },
+      success: function(response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+        console.log(response);
+      }
+    });
+  }
 
-    //document.getElementById("ofrece" + suma).style.border="1px solid #f00";
+  function agrega_fecha(suma) {
+    var c = document.getElementById("contrato" + suma).value;
+    var p = document.getElementById("paleta" + suma).value;
+    var o = document.getElementById("fechaRe" + suma).value;
+    var parametros = {
+      "contrato": c,
+      "paleta": p,
+      "fecha": o
+    };
+    $.ajax({
+      data: parametros, //datos que se envian a traves de ajax
+      url: 'ajax_fecha', //archivo que recibe la peticion
+      type: 'post', //método de envio
+      beforeSend: function() {
+        console.log("Exito");
+      },
+      success: function(response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+        console.log(response);
+      }
+    });
+  }
+
+
+  function quecapturo(suma) {
     document.getElementById("ofrece" + suma).style.backgroundColor = "#82E0AA";
     //alert(z);
     var s = document.getElementById("subasta").value;
@@ -647,7 +687,7 @@ if (($fac != '')) {
 
     $.ajax({
       data: parametros, //datos que se envian a traves de ajax
-      url: 'ajax_proceso.php', //archivo que recibe la peticion
+      url: 'ajax_proceso', //archivo que recibe la peticion
       type: 'post', //método de envio
       beforeSend: function() {
         $("#resultado").html("<p style='color:green';>Agregado, con éxito...</p>");
@@ -655,11 +695,31 @@ if (($fac != '')) {
       },
       success: function(response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
         $("#resultado").html(response);
-        //alert("insertado");
+        console.log(response);
       }
     });
 
   }
+
+
+  function sendEmailDevolver(subasta,suma,suma_temporal,nombre, rol_recibe, paleta, lote, descript, reserve, receipt, email){
+    let newName = nombre.replace(/\s+/g, ' ');
+    $.ajax({
+            type : "POST",  //type of method
+            url  : "BackItemUser",  //your page
+            data : {
+               'subasta' : subasta,
+                'empieza' : suma_temporal,
+                'finaliza' : suma,
+                'suma' : suma,
+                'email' : email
+              },
+            success: function(res){  
+                                    //do what you want here...
+                    }
+        });
+    }
+   
   /*
   function devolver(numero){
     //alert("entra__" + numero);

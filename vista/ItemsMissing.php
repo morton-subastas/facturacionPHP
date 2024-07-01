@@ -10,7 +10,7 @@ if( ($fac !== '')){
     include "head.php";
     include "aside.php";
 
-    if( ($fac == 'mjimenez@mortonsubastas.com') || ($fac == 'msanchez@mortonsubastas.com') or ($fac == 'mramirez@mortonsubastas.com')){
+    if( ($fac == 'mjimenez@mortonsubastas.com') || ($fac == 'jjuarez@mortonsubastas.com') or ($fac == 'mramirez@mortonsubastas.com')){
         /**************************************************************
         *CONEXION A RFC
         ***************************************************************/
@@ -29,7 +29,7 @@ if( ($fac !== '')){
               case 'mramirez@mortonsubastas.com':
                     $filtro = "Oportunidades";
               break;
-              case 'msanchez@mortonsubastas.com':
+              case 'vmartinez@mortonsubastas.com':
               case 'rcerecedo@mortonsubastas.com':
               case 'mbartolo@mortonsubastas.com':
                     $filtro = "Todas";
@@ -38,6 +38,7 @@ if( ($fac !== '')){
             include 'funciones_RFC.php';
             //list($numsub, $saledate, $saledept, $locate) = getAuctions();
             $variable = getAuctions ($filtro);
+           // print_r($variable);
         //    echo "--------------"; var_dump($variable[0]); echo "--------------";
     //echo "0)En proceso de construccion<br>";
     //echo "muestraA";
@@ -58,7 +59,7 @@ if( ($fac !== '')){
       <div class="col-md-12">
         <div class="well well-sm">
           <fieldset>
-            <legend class="text-center header"><h1><strong style="color:#004D43 !important">Devoluciones y/</strong> <strong>o Recontratacciones</strong></h1><br><br></legend>
+            <legend class="text-center header"><h1><strong style="color:#004D43 !important">Recontrataciones</strong></h1><br><br></legend>
                 <?php
                   if (($fac == 'msanchez@mortonsubastas.com')||($fac == 'rcerecedo@mortonsubastas.com')||($fac == 'mbartolo@mortonsubastas.com')){
                       echo '<form  class="col-lg-12"  action="SearchSellers2" method="post" >';
@@ -73,15 +74,14 @@ if( ($fac !== '')){
                         <!-- <p>Subasta :</p> -->
                         <!-- <div class="caja"> -->
                         <input type='hidden' name='rol' id='rol' value='<?php echo $rol_bd;?>'>
-                          <select name="subasta" class="form-select select-sub">
+
+                          <select name="subasta" class="form-select select-sub" >
                             <?php
                             while ($suma <= $cuantos) {
-                              //echo "1)".$variable[$suma]["saleno"]."<br>";
-                              //echo "2)".$variable[$suma]["salename"]."<br>";
-                              //echo "3)".$variable[$suma]["saledate"]."<br><br>";
-                              echo "<option value=".$variable[$suma]["saleno"].">".$variable[$suma]["saleno"]."-".$variable[$suma]["salename"]."-".$variable[$suma]["saledate"]."</option>";
+                              echo "<option value='".$variable[$suma]["saleno"].','.$variable[$suma]["salename"]."'>".$variable[$suma]["saleno"]."-".$variable[$suma]["salename"]."-".$variable[$suma]["saledate"]."</option>";
                               $suma = $suma + 1;
                             }
+
                             ?>
 
                           </select>

@@ -102,50 +102,22 @@ if (($fac != '')) {
 	$mail = new PHPMailer(true);
 
 	try {
-		//echo "NOm".$nom_subasta_es;
-		//Server settings
-		$mail->SMTPDebug = 0;                      //Enable verbose debug output
-		$mail->isSMTP();                                            //Send using SMTP
-		$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-		$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-		$mail->Username   = 'msanchez@mortonsubastas.com';                 	    //SMTP username
-		$mail->Password   = 'ManeMorton';                               //SMTP password
-		$mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
-		$mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-		$mail->setFrom($fac, 'CORREO');
-		$mail->addBCC($fac, 'CORREO');
-
-		//Content
-		$mail->isHTML(true);                                  //Set email format to HTML
-		$mail->Subject = 'Notificacion previa a Subatas ' . $sub . '';
-		//echo "sub".$sub;
 		$variable = getEmailCliente_Notificaciones($sub);
 		$cuantos  = count($variable);
-		//echo "cuantos:".$cuantos."-<br>";
-		//var_dump($variable);
-		//$cuantos = 3;
 		$variable2 = getEmailCliente_NotificacionesDatos($sub);
-		//$variable2 = getEmailCliente_Notificaciones($sub);
-		//var_dump($variable2);
 		$cuantos2 = count($variable2);
-		//echo "cuantos2:".$cuantos2."-<br>";
-		//var_dump($variable2);
+
 		echo "<center><H1>NOTIFICACIONES PREVIAS A SUBASTA</H1></center>";
 		for ($a = 0; $a <= $cuantos; $a++) {
 			if ((trim($variable[$a]["email"]) != "")) {
 				$cuantos_correos = $cuantos_correos + 1;
 			}
 		}
-		//echo "llega".$cuantos_correos."<br>";
-		//echo "sub-".$sub."-<br>";
+		
 		for ($i = 0; $i <= $cuantos; $i++) {
 			$corr = $variable[$i]["email"];
 			$con1 = $variable[$i]["receipt"];
-			//echo $i.")".$corr."-".$cuantos."<br>";
-
-
-
+			
 			if ((trim($corr) != '' && trim($corr) != '.')) {
 				//echo $i."*)".$corr."<br>";
 				$encabezado = 0;
@@ -171,8 +143,8 @@ if (($fac != '')) {
 				echo "<body style='background: #f6f8f9'>";
 				$body .= "<div style='max-width: 700px; margin: 0px auto; font-family: Helvetica, sans-serif, 'Open Sans'; background: #fff; padding: 10px 40px;'>";
 				echo "<div style='max-width: 700px; margin: 0px auto; font-family: Helvetica, sans-serif, 'Open Sans'; background: #fff; padding: 10px 40px;'>";
-				$body .= "<img src='https://www.mortonsubastas.com/images/Misc/logotipo.png' style='width: 250px;margin-top:20px'>";
-				echo "<img src='https://www.mortonsubastas.com/images/Misc/logotipo.png' style='width: 250px;margin-top:20px'>";
+				$body .= "<img src='https://mortonsubastas.com/new/img/ms_caballo_negro_facturacion.jpg' style='width: 250px;margin-top:20px'>";
+				echo "<img src='https://mortonsubastas.com/new/img/ms_caballo_negro_facturacion.jpg' style='width: 250px;margin-top:20px'>";
 				$body .= "<hr style='border: 1px solid #004D43; margin: 25px auto;opacity:1'>";
 				echo "<hr style='border: 1px solid #004D43; margin: 25px auto; opacity: 1'>";
 				//$body .=  "<h2 style='font-size: 30px; color: #004d43; font-family: Helvetica,sans-serif;'>¡GRACIAS POR CONFIAR!</h2>";
@@ -194,26 +166,22 @@ if (($fac != '')) {
 							if ($fac == "cpascual@mortonsubastas.com") {
 								$es_ = strpos($nom_subasta_es, 'Libros');
 								if ($es_ > 0) { //LIBROS
-									echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el martes " . $fecha_subasta . ".<br><br>";
-									$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el martes " . $fecha_subasta . ".<br><br>";
+									echo "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
+									$body .= "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
 								} else { //VINOS
-									$fecha_subasta = "" . substr($dia, 0, 2) . " de " . $mes_c . " de " . $ano;
-									//echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato ".trim($variable2[$j]["receipt"]).", me permito enviarle la relación de piezas que están programadas para nuestra próxima ".trim($nom_subasta_es)." No. ".trim($sub).", la cual se llevará a cabo el miercoles ".$fecha_subasta.".<br><br>";
-									//$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato ".trim($variable2[$j]["receipt"]).", me permito enviarle la relación de piezas que están programadas para nuestra próxima ".trim($nom_subasta_es)." No. ".trim($sub).", la cual se llevará a cabo el miercoles ".$fecha_subasta.".<br><br>";
-
-									echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el jueves " . $fecha_subasta . ".<br><br>";
-									$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el jueves " . $fecha_subasta . ".<br><br>";
+									echo "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
+									$body .= "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
 								}
 							} else {
 								if ($fac == 'ebonilla@mortonsubastas.com') {
-									echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el jueves " . $fecha_subasta . ".<br><br>";
-									$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . trim($variable2[$j]["receipt"]) . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el jueves " . $fecha_subasta . ".<br><br>";
+									echo "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
+									$body .= "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
 								} elseif ($fac == 'jjuarez@mortonsubastas.com') {
-									echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . $variable2[$j]["receipt"] . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima <span style='color:#004d43;font-weight:bold'>" . trim($nom_subasta_es) . "</span> No. " . trim($sub) . ", la cual se llevará a cabo el <span style='color:#004d43;font-weight:bold'>" . $fecha_subasta . "</span> <br><br>";
-									$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . $variable2[$j]["receipt"] . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima <span style='color:#004d43;font-weight:bold'>" . trim($nom_subasta_es) . "</span> No. " . trim($sub) . ", la cual se llevará a cabo el <span style='color:#004d43;font-weight:bold'>" . $fecha_subasta . "</span> <br><br>";
+									echo "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b> en nuestro salón de subastas en Monte Athos # 179.<br><br>";
+									$body .= "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b> en nuestro salón de subastas en Monte Athos # 179.<br><br>";
 								} else {
-									echo "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . $variable2[$j]["receipt"] . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el sábado " . $fecha_subasta . " <br><br>";
-									$body .= "Espero se encuentre muy bien.<br><br>Dando seguimiento a su contrato " . $variable2[$j]["receipt"] . ", me permito enviarle la relación de piezas que están programadas para nuestra próxima " . trim($nom_subasta_es) . " No. " . trim($sub) . ", la cual se llevará a cabo el sábado " . $fecha_subasta . "<br><br>";
+									echo "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
+									$body .= "Con base a su contrato <b>" . trim($variable2[$j]["receipt"]) . "</b>, le comparto la relacion de piezas programadas para la " . trim($nom_subasta_es) . " No. <b>" . trim($sub) . "</b>, la cual se llevará a cabo el <b>" . $fecha_subasta . "</b>.<br><br>";
 								}
 							}
 
@@ -225,6 +193,10 @@ if (($fac != '')) {
 							echo "<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>CONTRATO</center></th>";
 							$body .=	"<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>DESCRIPCIÓN</center></th>";
 							echo "<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>DESCRIPCIÓN</center></th>";
+							if($fac != 'mjimenez@mortonsubastas.com'){
+								$body .= "<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>ESTIMADO</center></th>";
+								echo "<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>ESTIMADO</center></th>";
+							}
 							$body .=	"<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>RESERVA </center></th>";
 							echo	"<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>RESERVA </center></th>";
 							$body .=	"<th style='padding: 15px; border-right: 2px solid #fff; background: #004d43; color: #fff'><center>IMAGEN</center></th>";
@@ -233,13 +205,17 @@ if (($fac != '')) {
 							echo "</tr>";
 							$encabezado = 1;
 						}
-						//echo "<br>";
+						
 						$body .=  "<tr>";
 						echo "<tr>";
 						$body .= "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='15%'><b>" . $variable2[$j]["receipt"] . "</b><br><h6>Partida:<b>" . $variable2[$j]["item"] . "</b><br>Lote: <b>" . substr($variable2[$j]["salelot"], 5, 12) . "</b></h6><br></td>";
 						echo "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='15%'><b>" . $variable2[$j]["receipt"] . "</b><br><h6>Partida:<b>" . $variable2[$j]["item"] . "</b><br>Lote: <b>" . substr($variable2[$j]["salelot"], 5, 12) . "</b><h6><br></td>";
 						$body .= "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='25%'><center>" . $variable2[$j]["descript"] . "</center></td>";
 						echo "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;'><center width='25%'>" . $variable2[$j]['descript'] . "</center></td>";
+						if($fac != 'mjimenez@mortonsubastas.com'){
+							$body .= "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='25%'><center>$" . number_format($variable2[$j]['low']) . " - $" .number_format($variable2[$j]['high']) . "</center></td>";
+							echo "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='25%'><center>$" . number_format($variable2[$j]['low']) . " - $" .number_format($variable2[$j]['high']) . "</center></td>";
+						}
 						$body .= "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='15%'><center>$" . number_format($variable2[$j]["reserve"]) . " MXN</center></td>";
 						echo "<td style='padding: 15px; border-top: 2px solid #004D43; border-right: 2px solid #004D43;' width='15%'><center>$" . number_format($variable2[$j]['reserve']) . " MXN</center></td>";
 						$img = $variable2[$j]["pictpath"];
@@ -267,24 +243,50 @@ if (($fac != '')) {
 				$body .= "<br>";
 				echo "<br>";
 
+				
+				$body .= "<table width='100%'>
+				<tr>
+					<td style='padding: 15px; width='25%'>
+					   <a href='https://mortonsubastas.com/avisodeprivacidad/' TARGET='_BLANK'>
+						   <img src='https://mortonsubastas.com/new/img/aviso_privacidad_button.jpg'>
+					   </a>
+				   </td>
+				   <td style='padding: 15px; width='25%'>
+				   </td>
+				   <td style='padding: 15px; width='25%'>
+				   </td>
+				   <td  style='padding: 15px; width='25%'>
+				   </td>
+			   </tr></table><br><br>";
+
+				echo "<table width='100%'>
+				<tr>
+					<td style='padding: 15px; width='25%'>
+						<a href='https://mortonsubastas.com/avisodeprivacidad/' TARGET='_BLANK'>
+							<img src='https://mortonsubastas.com/new/img/aviso_privacidad_button.jpg'>
+						</a>
+					</td>
+					<td style='padding: 15px; width='25%'>
+					</td>
+					<td style='padding: 15px; width='25%'>
+					</td>
+					<td  style='padding: 15px; width='25%'>
+					</td>
+					
+				</tr></table><br><br>";
 
 				if ($fac == "cpascual@mortonsubastas.com") {
 					$es_ = strpos($nom_subasta_es, 'Libros');
-					if ($es_ > 0) { //VINOS
+					if ($es_ > 0) { //LIBROS
 						echo "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href='https://mortonsubastas.com' style='font-weigth: bold; color:#004d43;'>www.mortonsubastas.com </a><br><br>Los resultados de la misma se harán llegar un día posterior a la fecha en que se realizó la subasta.<br><br>";
 						$body .= "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href = 'https://mortonsubastas.com' style='font-weigth: bold; color:#004d43;'>www.mortonsubastas.com</a> <br><br>Los resultados de la misma se harán llegar un día posterior a la fecha en que se realizó la subasta. <br><br>";
-
 						echo "Si tiene alguna duda, favor de ponerse en contacto con Jaciel López al 55 52 83 31 40 ext. 5120 o vía correo electrónico a jlopez@mortonsubastas.com <br><br>";
 						$body .= "Si tiene alguna duda, favor de ponerse en contacto con Jaciel López al 55 52 83 31 40 ext. 5120 o vía correo electrónico a jlopez@mortonsubastas.com <br><br>";
-					} else { //LIBROS
+					} else { //VINOS
 						echo "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href='https://mortonsubastas.com' style='font-weigth: bold; color:#004d43;'>www.mortonsubastas.com</a> <br><br>Los resultados de la misma se harán llegar un día posterior a la fecha en que se realizó la subasta.<br><br>";
 						$body .= "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href = 'https://mortonsubastas.com' style='font-weigth: bold; color:#004d43;'>www.mortonsubastas.com </a></a><br><br>Los resultados de la misma se harán llegar un día posterior a la fecha en que se realizó la subasta. <br><br>";
-
-						//echo "Si tiene alguna duda, favor de ponerse en contacto con Jessica Cazares al 55 52 83 31 40 ext. 3130 o vía correo electrónico a jcazares@mortonsubastas.com <br><br>";
-						//$body .= "Si tiene alguna duda, favor de ponerse en contacto con Jessica Cazares al 55 52 83 31 40 ext. 3130 o vía correo electrónico a jcazares@mortonsubastas.com <br><br>";
-
-						echo "Si tiene alguna duda, favor de ponerse en contacto con Verónica Bernal al 55 52 83 31 40 ext. 6883 o vía correo electrónico a vbernal@mortonsubastas.com <br><br>";
-						$body .= "Si tiene alguna duda, favor de ponerse en contacto con Verónica Bernal al 55 52 83 31 40 ext. 6883 o vía correo electrónico a vbernal@mortonsubastas.com <br><br>";
+						echo "Si tiene alguna duda, favor de ponerse en contacto con Ana Laura Rodríguez al 55 52 83 31 40 ext. 3424 o vía correo electrónico a arodriguez@mortonsubastas.com <br><br>";
+						$body .= "Si tiene alguna duda, favor de ponerse en contacto con Ana Laura Rodríguez al 55 52 83 31 40 ext. 3424 o vía correo electrónico a arodriguez@mortonsubastas.com <br><br>";
 					}
 				} else {
 					if ($fac == 'ebonilla@mortonsubastas.com') {
@@ -296,10 +298,10 @@ if (($fac != '')) {
 							echo "Si tiene alguna duda, favor de ponerse en contacto con Diana Álvarez para Obra Gráfica  ext. 3145 o vía correo electrónico a <a href='mailto:dalvarez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>dalvarez@mortonsubastas.com </a><br><br>";
 							$body .= "Si tiene alguna duda, favor de ponerse en contacto con Diana Álvarez  para Obra Gráfica  ext. 3145 o vía correo electrónico a <a href='mailto:dalvarez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>dalvarez@mortonsubastas.com </a><br><br>";
 						} else {
-							echo "Si tiene alguna duda, favor de ponerse en contacto con Fernanda Serrano al 55 52 83 31 40 ext. 6894 o vía correo electrónico a <a href='mailto:mserrano@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>mserrano@mortonsubastas.com</a> o con Ana Paula López Nieto ext. 3384 o vía correo electrónico a ";
-							echo "<a href='mailto:aplopez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>aplopez@mortonsubastas.com </a><br><br>";
-							$body .= "Si tiene alguna duda, favor de ponerse en contacto con Fernanda Serrano al 55 52 83 31 40 ext. 6894 o vía correo electrónico a <a href='mailto:mserrano@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>mserrano@mortonsubastas.com</a> o con Ana Paula López Nieto ext. 3384 o vía correo electrónico a ";
-							$body .= "<a href='mailto:aplopez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>aplopez@mortonsubastas.com </a><br><br>";
+							echo "Si tiene alguna duda, favor de ponerse en contacto con Ana Segoviano al 55 52 83 31 40 ext. 3146 o vía correo electrónico a <a href='mailto:asegoviano@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>asegoviano@mortonsubastas.com</a> o con Diana Álvarez ext. 3145 o vía correo electrónico a ";
+							echo "<a href='mailto:dalvarez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>dalvarez@mortonsubastas.com </a><br><br>";
+							$body .= "Si tiene alguna duda, favor de ponerse en contacto con Ana Segoviano al 55 52 83 31 40 ext. 3146 o vía correo electrónico a <a href='mailto:asegoviano@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>asegoviano@mortonsubastas.com</a> o con Diana Álvarez ext. 3145 o vía correo electrónico a ";
+							$body .= "<a href='mailto:dalvarez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>dalvarez@mortonsubastas.com </a><br><br>";
 						}
 					}
 					if ($fac == 'jjuarez@mortonsubastas.com') {
@@ -309,17 +311,17 @@ if (($fac != '')) {
 						if ($es_ > 0) {
 							echo "Si tiene alguna duda, favor de ponerse en contacto con Diana Álvarez para Obra Gráfica  ext. 3145 o vía correo electrónico a <a href='mailto:dalvarez@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>dalvarez@mortonsubastas.com </a><br><br>";
 						} else {
-							$new_data = strpos($nom_subasta_es, 'Alta Relojería');
-							$new_data_1 = strpos($nom_subasta_es, 'Antigüedades Mexicanas');
+							$new_data = (strpos($nom_subasta_es, "Joyeria") > 0) || (strpos($nom_subasta_es, "Joyería") > 0);
+							$new_data_1 = strpos($nom_subasta_es, "Antigüedades") > 0;
 							if ($new_data > 0) {
 								echo "Si tiene alguna duda, favor de ponerse en contacto con Alejandra Rojas al 55 52 83 31 40 ext. 6895 o vía correo electrónico a <a href='mailto:arojas@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>arojas@mortonsubastas.com</a> ";
 								echo "<br><br>";
 								$body .= "Si tiene alguna duda, favor de ponerse en contacto con Alejandra Rojas al 55 52 83 31 40 ext. 6895 o vía correo electrónico a <a href='mailto:arojas@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>arojas@mortonsubastas.com</a> ";
 								$body .= "<br><br>";
 							} elseif ($new_data_1 > 0) {
-								echo "Si tiene alguna duda, favor de ponerse en contacto con Verónica Bernal al <span style='font-weight: bold; color: #004d43;'>55 52 83 31 40 ext. 6883</span> o vía correo electrónico a <a href='mailto:vbernal@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>vbernal@mortonsubastas.com</a> ";
+								echo "Si tiene alguna duda, favor de ponerse en contacto con Areli Carranza al <span style='font-weight: bold; color: #004d43;'>55 52 83 31 40 ext. 6883</span> o vía correo electrónico a <a href='mailto:acarranza@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>acarranza@mortonsubastas.com</a> ";
 								echo "<br><br>";
-								$body .= "Si tiene alguna duda, favor de ponerse en contacto con Verónica Bernal al <span style='font-weight: bold; color: #004d43;'>55 52 83 31 40 ext. 6883</span> o vía correo electrónico a <a href='mailto:vbernal@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>vbernal@mortonsubastas.com</a> ";
+								$body .= "Si tiene alguna duda, favor de ponerse en contacto con Areli Carranza al <span style='font-weight: bold; color: #004d43;'>55 52 83 31 40 ext. 6883</span> o vía correo electrónico a <a href='mailto:acarranza@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>acarranza@mortonsubastas.com</a> ";
 								$body .= "<br><br>";
 							} else {
 								echo "Si tiene alguna duda, favor de ponerse en contacto con Alejandra Rojas al 55 52 83 31 40 ext. 6895 o vía correo electrónico a <a href='mailto:arojas@mortonsubastas.com' style='font-weight: bold; color: #004d43; text-decoration: none'>arojas@mortonsubastas.com</a> ";
@@ -327,11 +329,11 @@ if (($fac != '')) {
 							}
 						}
 					} elseif ($fac !== 'ebonilla@mortonsubastas.com') {
-						echo "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href= 'https://www.mortonsubastas.com' style= 'font-weight:bold; color: #004d43'>www.mortonsubastas.com</a>. <br><br>Los resultados de la misma se harán llegar el próximo lunes.<br><br>";
-						$body .= "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href= 'https://www.mortonsubastas.com' style= 'font-weight:bold; color: #004d43'>www.mortonsubastas.com</a>. <br><br>Los resultados de la misma se harán llegar el próximo lunes. <br><br>";
+						echo "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href= 'https://www.mortonsubastas.com' style= 'font-weight:bold; color: #004d43'>www.mortonsubastas.com</a>. <br><br>Los resultados de la misma se harán llegar al siguiente día hábil.<br><br>";
+						$body .= "Lo invitamos a consultar el catálogo digital en nuestro sitio web <a href= 'https://www.mortonsubastas.com' style= 'font-weight:bold; color: #004d43'>www.mortonsubastas.com</a>. <br><br>Los resultados de la misma se harán llegar al siguiente día hábil. <br><br>";
 
-						echo "Si tiene alguna duda, favor de ponerse en contacto con <a href='tel:5552833140' style='font-weight:bold;color:#004d43;'>Miriam Jiménez al 55 52 83 31 40 ext. 5093</a> o vía correo electrónico a <a href='mailto:mjimenez@moortonsubastas.com' style='font-weight:bold; color:#004d43;'>mjimenez@mortonsubastas.com</a> <br><br>";
-						$body .= "Si tiene alguna duda, favor de ponerse en contacto con <a href='tel:5552833140' style='font-weight:bold;color:#004d43;'>Miriam Jiménez al 55 52 83 31 40 ext. 5093</a> o vía correo electrónico a <a href='mailto:mjimenez@moortonsubastas.com' style='font-weight:bold; color:#004d43;'>mjimenez@mortonsubastas.com</a> <br><br>";
+						echo "Si tiene alguna duda, favor de ponerse en contacto con Miriam Jiménez vía correo electrónico  <a href='mailto:mjimenez@moortonsubastas.com' style='font-weight:bold; color:#004d43;'>mjimenez@mortonsubastas.com</a> <br><br>";
+						$body .= "Si tiene alguna duda, favor de ponerse en contacto con Miriam Jiménez vía correo electrónico  <a href='mailto:mjimenez@moortonsubastas.com' style='font-weight:bold; color:#004d43;'>mjimenez@mortonsubastas.com</a> <br><br>";
 					}
 				}
 				echo "Saludos cordiales.<br><br>";
@@ -402,29 +404,23 @@ if (($fac != '')) {
 				echo "<img src='https://mortonsubastas.com/images/iconos_sociales/caballo-morton.png' alt='' style='width: 20%;'><br>";
 				$body .= "<b>Morton Subastas</b> <br><br>";
 				echo "<b>Morton Subastas</b> <br><br>";
-				if ($_POST['radio'] == 'Mayka') {
-					$body .= "Ver mapa	<a href='https://www.google.com.mx/maps/place/Morton+Subastas+Sal%C3%B3n+Cerro+de+Mayka/@19.4272811,-99.2209882,16z/data=!4m5!3m4!1s0x85d201898e215555:0x9753601b8d0ce520!8m2!3d19.4271639!4d-99.2182472'>Cerro de Mayka No. 115, Col. Lomas de Chapultepec	Av. Constituyentes No. 910, Col. Lomas Altas</a><br><br>";
-					echo "Ver mapa	<a href='https://www.google.com.mx/maps/place/Morton+Subastas+Sal%C3%B3n+Cerro+de+Mayka/@19.4272811,-99.2209882,16z/data=!4m5!3m4!1s0x85d201898e215555:0x9753601b8d0ce520!8m2!3d19.4271639!4d-99.2182472'>Cerro de Mayka No. 115, Col. Lomas de Chapultepec	Av. Constituyentes No. 910, Col. Lomas Altas</a><br><br>";
-				}
-				if ($_POST['radio'] == 'Constituyentes') {
-					$body .= "Ver mapa	<a href='https://www.google.com/maps/place/Av+Constituyentes+910,+Lomas+Altas,+Miguel+Hidalgo,+11950+Ciudad+de+M%C3%A9xico,+CDMX/@19.39566,-99.228795,16z/data=!4m5!3m4!1s0x85d201a67892b40d:0x3575f03b9aaca225!8m2!3d19.3956775!4d-99.2287547?hl=es-419'>Av Constituyentes 910, Lomas Altas, CDMX, México ,CP 11950</a><br><br>";
-					echo "Ver mapa	<a href='https://www.google.com/maps/place/Av+Constituyentes+910,+Lomas+Altas,+Miguel+Hidalgo,+11950+Ciudad+de+M%C3%A9xico,+CDMX/@19.39566,-99.228795,16z/data=!4m5!3m4!1s0x85d201a67892b40d:0x3575f03b9aaca225!8m2!3d19.3956775!4d-99.2287547?hl=es-419'>Av Constituyentes 910, Lomas Altas, CDMX, México ,CP 11950</a><br><br>";
-				}
+		
 
-				$body .= "<a href='https://www.facebook.com/mortonsubastas'> <img src='https://mortonsubastas.com/images/iconos_sociales/facebook.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
-				echo "<a href='https://www.facebook.com/mortonsubastas'> <img src='https://mortonsubastas.com/images/iconos_sociales/facebook.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				
+				$body .= "<a href='https://www.facebook.com/mortonsubastas'> <img src='https://mortonsubastas.com/new/img/facebook.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				echo "<a href='https://www.facebook.com/mortonsubastas'> <img src='https://mortonsubastas.com/new/img/facebook.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
 				$body .= "<a href='https://www.instagram.com/mortonsubastas/'>";
 				echo "<a href='https://www.instagram.com/mortonsubastas/'>";
-				$body .= "<img src='https://mortonsubastas.com/images/iconos_sociales/instagram.png' alt='icono de facebook' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
-				echo "<img src='https://mortonsubastas.com/images/iconos_sociales/instagram.png' alt='icono de facebook' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				$body .= "<img src='https://mortonsubastas.com/new/img/instagram.jpg' alt='icono de facebook' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				echo "<img src='https://mortonsubastas.com/new/img/instagram.jpg' alt='icono de facebook' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
 				$body .= "<a href='https://twitter.com/mortonsubastas'>";
 				echo "<a href='https://twitter.com/mortonsubastas'>";
-				$body .= "<img src='https://mortonsubastas.com/images/iconos_sociales/twitter.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
-				echo "<img src='https://mortonsubastas.com/images/iconos_sociales/twitter.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				$body .= "<img src='https://mortonsubastas.com/new/img/twitter.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				echo "<img src='https://mortonsubastas.com/new/img/twitter.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
 				$body .= "<a href='https://www.youtube.com/user/MortonSubastas'>";
 				echo "<a href='https://www.youtube.com/user/MortonSubastas'>";
-				$body .= "<img src='https://mortonsubastas.com/images/iconos_sociales/youtube.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
-				echo "<img src='https://mortonsubastas.com/images/iconos_sociales/youtube.png' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				$body .= "<img src='https://mortonsubastas.com/new/img/youtube.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
+				echo "<img src='https://mortonsubastas.com/new/img/youtube.jpg' style='width: 2.5em; margin-left: 10px; filter: grayscale(100%) opacity(60%);'></a>";
 				$body .= "</p>";
 				echo "</p>";
 				$body .= "</div>";
@@ -439,7 +435,7 @@ if (($fac != '')) {
 				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 				//echo "antes de enviar";
 				$mail->CharSet = 'UTF-8';
-				echo 'Así seria la prueba del correo ';
+				//echo 'Así seria la prueba del correo ';
 			} else {
 				//var_dump($variable2[$i]);
 				$nombre = $variable2[$i]["firstname"] . " " . $variable2[$i]["lastname"];
@@ -451,7 +447,7 @@ if (($fac != '')) {
 
 		// $mail->isHTML(true);
 		//if(($fac == "cpascual@mortonsubastas.com") or ($fac == "msanchez@mortonsubastas.com") or ($fac == "ebonilla@mortonsubastas.com")){
-		if ($fac == "msanchez@mortonsubastas.com") {
+		if ($fac == "ehernandez@mortonsubastas.com") {
 			//echo $fac;
 			echo "<br><br><hr>";
 			echo "<form  class='col-lg-12 id='ItemNotSells2' name='ItemNotSells2' method='post' action='NotificationPreview2'>";
@@ -474,7 +470,7 @@ if (($fac != '')) {
 			echo "</form>";
 			echo "<br><br><br><hr>";
 		} else {
-			if (($fac == "mjimenez@mortonsubastas.com") or ($fac == "cpascual@mortonsubastas.com") or ($fac == "ebonilla@mortonsubastas.com") or ($fac == "jjuarez@mortonsubastas.com")) {
+			if (($fac == "mjimenez@mortonsubastas.com") || ($fac == "cpascual@mortonsubastas.com") || ($fac == "ebonilla@mortonsubastas.com") || ($fac == "jjuarez@mortonsubastas.com")) {
 				echo "<br>";
 				echo "<form  class='col-lg-12 id='ItemNotSells2' name='ItemNotSells2' method='post' action='NotificationPreview2'>";
 				echo "<center>";

@@ -342,7 +342,7 @@ function limpiar(){
     <div class="collapse navbar-collapse" id="myNavbar">
       <div class="title-head">
         <?php
-        session_start();
+        //session_start();
         $fac = $_SESSION['email'];
 
         require_once ("../Controlador/controladorUsuarios.php");
@@ -388,7 +388,7 @@ function limpiar(){
         </button>
         <!-- <p class="text-warning" style='margin-left:15px'><h2 class="menu-home">MENU</h2></p> -->
         <?PHP
-        echo "<p style='position:absolute;top:15%'>Sesión <b>".$all_AnUser['usu_nombre']."</b></p>";
+        //echo "<p style='position:absolute;top:15%'>Sesión <b>".$all_AnUser['usu_nombre']."</b></p>";
         ?>
         <!-- <p><h1><strong style="color:#004D43 !important">Generando|</strong> <strong>Factura</strong></h1></p> -->
       <!-- <p class="text-warning" style='margin-left:15px'><h2 class="menu-home">&nbsp;  Morton Subastas &nbsp;</h2></p> -->

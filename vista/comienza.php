@@ -3,8 +3,6 @@
 //error_reporting(1);
 session_start();
 $fac = $_SESSION['email'];
-
-//echo "a".$fac;
 if(($fac != '')){
   include "head.php";
   include "aside.php";
