@@ -34,28 +34,33 @@ function getLotsRecipt($recibo){
     //return $inventor;
 }
 
-
-// GET AUCTIONS BY FILTER
-
 function getAuctions($filtro){
   try {
+    //echo "filtro:<br>".$filtro;
     $filtro = trim($filtro);
     $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-    $data = file_get_contents("https://mimorton.com:8444/getSales/".$filtro, true, stream_context_create($arrContextOptions));
+    //echo "recibos::.".$recibo."<br>";
+    $data = file_get_contents("https://mimorton.com:8444/getSales/$filtro", true, stream_context_create($arrContextOptions));
     $inventor = json_decode($data, true);
+    //var_dump($inventor);
     return $inventor;
   } catch (Exception $e) {
       echo 'Excepción capturada: ',  $e->getMessage(), "\n";
        var_dump($e->getMessage());
   }
+
+
 }
 
 function getAuctionsAll($filtro){
   try {
+    //echo "filtro:<br>".$filtro;
     $filtro = trim($filtro);
     $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-    $data = file_get_contents("https://mimorton.com:8444/getSalesAll/".$filtro, true, stream_context_create($arrContextOptions));
+    echo "2)recibos:-".$filtro."-<br>";
+    $data = file_get_contents("https://mimorton.com:8444/getSalesAll/$filtro", true, stream_context_create($arrContextOptions));
     $inventor = json_decode($data, true);
+    //var_dump($inventor);
     return $inventor;
   } catch (Exception $e) {
       echo 'Excepción capturada: ',  $e->getMessage(), "\n";
@@ -95,51 +100,6 @@ function getAllSubasta($numero){
 
 }
 
-function getAllSubastaBuys($numero){
-    $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-    $data = file_get_contents("https://mimorton.com:8444/getAllSubastaBuys/$numero", false, stream_context_create($arrContextOptions));
-    $inventor = json_decode($data, true);
-    return $inventor;
-}
-
-
-function getAuctionDebts($numero){
-  $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-  $data = file_get_contents("https://mimorton.com:8444/getMortonDebts/$numero", false, stream_context_create($arrContextOptions));
-  $inventor = json_decode($data, true);
-  return $inventor;
-}
-
-function getLotsByRcpt($receipt,$saleno){
-  $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-  $data = file_get_contents("https://mimorton.com:8444/getLotsByRcpt/".trim($receipt).'/'.trim($saleno), false, stream_context_create($arrContextOptions));
-  $inventor = json_decode($data, true);
-  return $inventor;
-}
-
-function getAbsenteeOffers($saleno){
-  $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-  $data = file_get_contents("https://mimorton.com:8444/getAbsenteeOffers/".trim($saleno), false, stream_context_create($arrContextOptions));
-  $inventor = json_decode($data, true);
-  return $inventor;
-}
-
-function getReceipt($receipt){
-  $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-  $data = file_get_contents("https://mimorton.com:8444/getReceipt/".trim($receipt), false, stream_context_create($arrContextOptions));
-  $inventor = json_decode($data, true);
-  return $inventor;
-}
-
-
-function getBidderInfo($custno,$saleno){
-  $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
-  $data = file_get_contents("https://mimorton.com:8444/getBidderInfo/".trim($custno).'/'.trim($saleno), false, stream_context_create($arrContextOptions));
-  $inventor = json_decode($data, true);
-  return $inventor;
-}
-
-
 function getEmailCliente_NotificacionesDatos($numero){
     //echo "dos";
     $arrContextOptions=array("ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
@@ -161,7 +121,7 @@ function getEmailCliente($numero){
   //echo "recibos::.".$recibo."<br>";
   //$data = file_get_contents("https://mimorton.com:8443/estadoCuenta?oper=getLotsRecipt&invno=GM00106182", false, stream_context_create($arrContextOptions));
   //$data = file_get_contents("https://mimorton.com:8443/estadoCuenta?oper=getEmail&id=$numero", false, stream_context_create($arrContextOptions));
-  $data = file_get_contents("https://mimorton.com:8444/getEmailCliente/".$numero, false, stream_context_create($arrContextOptions));
+  $data = file_get_contents("https://mimorton.com:8444/getEmailCliente/$numero", false, stream_context_create($arrContextOptions));
   $inventor = json_decode($data, true);
   //var_dump($inventor);
   //echo "muestra".count($inventor);
@@ -175,7 +135,7 @@ function getEmailCliente_Notificaciones($numero){
   //echo "recibos::.".$recibo."<br>";
   //$data = file_get_contents("https://mimorton.com:8443/estadoCuenta?oper=getLotsRecipt&invno=GM00106182", false, stream_context_create($arrContextOptions));
   //$data = file_get_contents("https://mimorton.com:8443/estadoCuenta?oper=getEmail&id=$numero", false, stream_context_create($arrContextOptions));
-  $data = file_get_contents("https://mimorton.com:8444/getEmailCliente_Notificaciones/".$numero, false, stream_context_create($arrContextOptions));
+  $data = file_get_contents("https://mimorton.com:8444/getEmailCliente_Notificaciones/$numero", false, stream_context_create($arrContextOptions));
   $inventor = json_decode($data, true);
   //var_dump($inventor);
   //echo "muestra".count($inventor);

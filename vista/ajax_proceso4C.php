@@ -1,5 +1,7 @@
 <?php
+//$resultado = "C:".$_POST['contrato']."A:".$_POST['paleta']."RADIO".$_POST['radio'];
 
+//echo $resultado;
 $SUB_R = trim($_POST["subasta"]);
 $CON_R = trim($_POST['contrato']);
 $PAR_R = trim($_POST['partida']);
@@ -7,8 +9,7 @@ $PAL_R = trim($_POST['paleta']);
 $LUGAR_R = trim($_POST['radio']);
 $EMA_R = trim($_POST['correo']);
 
-
-$conn = new mysqli("localhost", "root", "", "timbrado");
+$conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
 
   if ($conn->connect_error) {
     die("ERROR: No se puede conectar al servidor: " . $conn->connect_error);
@@ -25,8 +26,8 @@ $conn = new mysqli("localhost", "root", "", "timbrado");
       session_start();
       $fac = $_SESSION['email'];
 
-      $query = "INSERT INTO `emailenviados`(`subasta_10`,`contrato`, `partida`, `paleta`, `ofrece`, `correo`,`comentarios50`, `status`,`lugar30`,`capturo40`)
-      VALUES ('".$SUB_R."','".$CON_R."','".$PAR_R."','".$PAL_R."','0.00','".$EMA_R."','', 'DEVOLVER','Constituyentes','".$fac."');";
+      $query = "INSERT INTO `emailenviados`(`id_email`, `subasta_10`,`contrato`, `partida`, `paleta`, `ofrece`, `correo`,`comentarios50`, `status`,`lugar30`,`capturo40`)
+      VALUES (0,'".$SUB_R."','".$CON_R."','".$PAR_R."','".$PAL_R."','0.00','".$EMA_R."','', 'DEVOLVER','Constituyentes','".$fac."');";
       //echo $query;
       //$resultado = $query;
       $result = $conn->query($query);
@@ -40,13 +41,14 @@ $conn = new mysqli("localhost", "root", "", "timbrado");
       //$resultado = $query;
       $result = $conn->query($query);
 
-      $resultado = "MODIFICADO";
+      //$resultado = "MODIFICADO"; //.$query;
     }
     //echo "Numero de resultado: $result->num_rows";
     //$resultado = "OK".$result->num_rows;
-    $conn->close();
+    $result->close();
   }
 
   echo $resultado;
+//$resultado  = "LLEGA";
 
 ?>

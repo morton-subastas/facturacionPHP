@@ -6,7 +6,7 @@ $CON_R = trim($_POST['contrato']);
 $PAL_R = trim($_POST['paleta']);
 $OBS_R = trim($_POST['observaciones']);
 
-$conn = new mysqli("localhost", "root", "", "timbrado");
+$conn = new mysqli("localhost", "root", "h0rKm8dEwHZz", "timbrado");
 
   if ($conn->connect_error) {
     die("ERROR: No se puede conectar al servidor: " . $conn->connect_error);
@@ -22,7 +22,7 @@ $conn = new mysqli("localhost", "root", "", "timbrado");
 
     //echo "Numero de resultado: $result->num_rows";
     //$resultado = "OK".$result->num_rows;
-    $conn->close();
+    $result->close();
   }
 
   echo $resultado;

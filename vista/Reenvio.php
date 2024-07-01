@@ -38,7 +38,7 @@ if(($fac != '')){
           echo "<div class='col-md-12'>";
 
     echo "<table class='table table-bordered' width='92%' border='2'>";
-      echo "<tr><th colspan='6' style='background-color:#004D43; color: #fff;'><center><b><h1>LOTES NO VENDIDOS-DEVOLVER DE LA SUBASTA ".$subasta." </h1></b></center></th></tr>";
+      echo "<tr><th colspan='6' style='background-color:#004D43; color: #fff;'><center><b><h1>LOTES NO VENDIDOS-DEVOLVER DE LA SUBASTAS ".$subasta." </h1></b></center></th></tr>";
       echo "<tr style='color:#fff; font-weight:normal; text-align:center; background: #004D43'>";
         //echo "<th style='font-weight:normal; text-align:center'>LOTE_</th>";
         echo "<td  bgcolor='#004D43' style='color:#ffffff' width='10%'>LOTE</th>";

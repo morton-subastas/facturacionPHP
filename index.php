@@ -30,7 +30,25 @@
      </head>
     <?php
 
+    //echo "comienza<br>";
+    /*
+    $files = "files";
+    deleteDirectory($files);
 
+    function deleteDirectory($dir) {
+      if(!$dh = @opendir($dir)) return;
+      while (false !== ($current = readdir($dh))) {
+        if($current != '.' && $current != '..') {
+            //echo 'Se ha borrado el archivo '.$dir.'/'.$current.'<br/>';
+            if (!@unlink($dir.'/'.$current))
+                deleteDirectory($dir.'/'.$current);
+        }
+      }
+      closedir($dh);
+      echo 'Se ha borrado el directorio '.$dir.'<br/>';
+      @rmdir($dir);
+    }
+*/
 
     //-------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------
@@ -42,7 +60,7 @@
         require_once ("Controlador/controladorLogueado.php");
         //echo "<br>VISTA: envia controlador";
         list($res_L, $status) = ControladorLogueado::searchUser($em, $pas);
-        
+        //echo "<br>recibes-".$res_L."-".$status;
 
         if (($res_L == 1) && ($status == 'ACTIVO') ){
           //header ('Location: http://desarrollomorton.com/admin/facturacion/vista/facturacion');
